@@ -12,7 +12,7 @@ const isValidImageUrl = async (url) => {
 };
 
 const ItemCard = ({ item, onUpdateItem }) => {
-  const [editingItemId, setEditingItemId] = useState(null);
+  const [isEditing, setEditing] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [isImageValid, setIsImageValid] = useState(true);
 
@@ -30,7 +30,7 @@ const ItemCard = ({ item, onUpdateItem }) => {
   }, [item.Poster]);
 
   const handleTitleClick = (item) => {
-    setEditingItemId(item.imdbID);
+    setEditing(true);
     setNewTitle(item.Title);
   };
 
@@ -47,13 +47,11 @@ const ItemCard = ({ item, onUpdateItem }) => {
         console.error("Error updating item:", error);
       }
     }
-    setEditingItemId(null);
+    setEditing(false);
   };
 
-  const isEditing = editingItemId === item.imdbID;
-  
   return (
-    <Card key={item.imdbID} className="card" style={{ width: "100%" }}>
+    <Card key={item.imdbID} className="card">
       {isImageValid && (
         <Link to={`/item/${item.imdbID}`}>
           <Card.Img variant="top" src={item.Poster} className="card-img-top" />

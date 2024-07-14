@@ -14,8 +14,7 @@ export const fetchData = async () => {
 
 export const updateItem = async (item) => {
   try {
-    const response = await axios.put(`${API_URL}/${item.imdbID}`, item);
-    return response.data.results;
+  //todo: update json file with updated date
   } catch (error) {
     console.error('Error updating item:', error);
     throw error;
