@@ -15,6 +15,7 @@ const App = () => {
   const [activeTab, setActiveTab] = useState("all");
 
   const loadData = async () => {
+
     try {
       const result = await fetchData();
       if (Array.isArray(result)) {
@@ -79,70 +80,70 @@ const App = () => {
 
   return (
     <Router>
-      <Container className="container">
-        {error && <div className="alert alert-danger">{error.message}</div>}
-        <Row className="mb-3">
-          <Col md={9} className="ml-auto">
-            <Row>
-              <Col md={8}>
-                <Form.Control
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                />{" "}
-              </Col>
-              <Col md={4}>
-                <Button onClick={clearSearch}>Clear</Button>
-                <Button onClick={loadData}>Refresh</Button>
-                <Button onClick={toggleSortOrder}>Sort</Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-        <Row>
-          <Col >
-            <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-              <Tab eventKey="all" title={`All (${data.length})`}>
-                <Col md={9}>
-                  <ItemList
-                    items={filteredData}
-                    viewType={viewType}
-                    onUpdateItem={handleUpdateItem}
-                    className="mt-3"
-                  />
-                </Col>
-              </Tab>
-              {categories.map((category) => (
-                <Tab
-                  eventKey={category}
-                  title={`${category} (${
-                    data.filter((item) => item.Type === category).length
-                  })`}
-                  key={category}
-                >
-                  <Col md={9}>
-                    <ItemList
-                      items={filteredData.filter(
-                        (item) => item.Type === category
-                      )}
-                      viewType={viewType}
-                      onUpdateItem={handleUpdateItem}
-                    />
-                  </Col>
-                </Tab>
-              ))}
-            </Tabs>
-            <Button onClick={toggleViewType} className="mt-3">
-              Change View
-            </Button>
-          </Col>
-        </Row>
-        <Routes>
-          <Route path="/item/:id" element={<ItemDetail items={data} />} />
-        </Routes>
-      </Container>
-    </Router>
+    <Container className="container">
+      {error && <div className="alert alert-danger">{error.message}</div>}
+      <Row className="mb-3">
+        <Col md={9} className="ml-auto">
+          <Row>
+            <Col md={8}>
+              <Form.Control
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+            </Col>
+            <Col md={4}>
+              <Button onClick={clearSearch}>Clear</Button>{" "}
+              <Button onClick={loadData}>Refresh</Button>{" "}
+              <Button onClick={toggleSortOrder}>Sort</Button>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={3}>
+          <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
+            <Tab eventKey="all" title={`All (${data.length})`}></Tab>
+            {categories.map((category) => (
+              <Tab
+                eventKey={category}
+                title={`${category} (${
+                  data.filter((item) => item.Type === category).length
+                })`}
+                key={category}
+              ></Tab>
+            ))}
+          </Tabs>
+          <Button onClick={toggleViewType} className="mt-3">
+            Change View
+          </Button>
+        </Col>
+        <Col md={9}>
+          {activeTab === "all" ? (
+            <ItemList
+              items={filteredData}
+              viewType={viewType}
+              onUpdateItem={handleUpdateItem}
+              className="mt-3"
+            />
+          ) : (
+            <ItemList
+              items={filteredData.filter((item) => item.Type === activeTab)}
+              viewType={viewType}
+              onUpdateItem={handleUpdateItem}
+              className="mt-3"
+            />
+          )}
+        </Col>
+      </Row>
+
+      <Routes>
+        <Route path="/item/:id" element={<ItemDetail items={data} />} />
+      </Routes>
+    </Container>
+  </Router>
+  
   );
 };
 

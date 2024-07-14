@@ -1,12 +1,13 @@
 
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
+
 import { Card, Button, Form } from 'react-bootstrap';
 
 const formatYear = (yearString) => {
   if (!yearString) return '';
-  const year = yearString.trim().slice(0, 4);
+  const year = yearString.slice(0, 4);
   return year;
 };
 
@@ -31,15 +32,15 @@ const ItemList = ({ items, viewType, onUpdateItem }) => {
   };
 
   return (
-    <div className={viewType === 'grid' ? 'grid-view' : 'list-view'}>
-      {items.map((item) => (
-        <Card key={item.imdbID} style={{ width: '18rem' }}>
-          {item.Poster !== 'N/A' && item.Poster ? (
+<div className={viewType === 'grid' ? 'grid-view' : 'list-view'}>
+  {items.map((item) => (
+     <Card key={item.imdbID} className="card" style={{ width: '100%' }}>
+          {item.Poster !== 'N/A' && item.Poster && (
             <Link to={`/item/${item.imdbID}`}>
-              <Card.Img variant="top" src={item.Poster} />
+              <Card.Img variant="top" src={item.Poster} className="card-img-top" />
             </Link>
-          ) : null}
-          <Card.Body>
+          )}
+          <Card.Body className="card-body">
             <Card.Title onClick={() => handleTitleClick(item)}>
               {editingItemId === item.imdbID ? (
                 <Form.Control
@@ -56,11 +57,11 @@ const ItemList = ({ items, viewType, onUpdateItem }) => {
             <Card.Text>
               Year: {formatYear(item.Year)}
             </Card.Text>
-            {/* Other item details and update logic here */}
           </Card.Body>
         </Card>
-      ))}
-    </div>
+  ))}
+</div>
+
   );
 };
 

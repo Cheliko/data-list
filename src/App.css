@@ -4,7 +4,7 @@
 
 .nav-tabs {
   display: block;
-  border: none;
+  border: none !important;
 }
 
 .nav-item {
@@ -16,16 +16,13 @@
   width: 100%;
   text-align: left;
   padding: 10px 15px;
-  border: 1px solid #dee2e6;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-  border-bottom-width: 1px;
+
 }
 
 .nav-link.active {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff #007bff #fff;
+  background-color: #007bff !important;
+  color: #fff !important;
+  border: none !important;
 }
 
 .nav-link:hover {
@@ -59,12 +56,28 @@
   flex: 1 0 21%; /* Adjust as needed */
 }
 
+
 .list-view {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Add space between rows */
 }
 
 .list-view .card {
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
+.list-view .card-img-top {
+  width: 150px; /* Adjust the width as needed */
+  height: auto;
+}
 
+.list-view .card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
