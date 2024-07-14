@@ -14,10 +14,10 @@ const ItemDetail = ({ items }) => {
       <Card.Header>{item.Title}</Card.Header>
       <Card.Body>
         {item.Poster !== 'N/A' && item.Poster ? (
-          <Card.Img variant="top" src={item.Poster} />
+          <Card.Img className='poster' src={item.Poster} />
         ) : null}
         <Card.Text>
-          Year: {(item.Year).trim().slice(0, 4)}
+          Year: {(item.Year).slice(0, 4)}
         </Card.Text>
         <Button onClick={() => navigate(-1)}>Back</Button>
       </Card.Body>

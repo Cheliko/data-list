@@ -1,67 +1,13 @@
-
-
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
-
-import { Card, Button, Form } from 'react-bootstrap';
-
-const formatYear = (yearString) => {
-  if (!yearString) return '';
-  const year = yearString.slice(0, 4);
-  return year;
-};
+import React from 'react';
+import ItemCard from './ItemCard';
 
 const ItemList = ({ items, viewType, onUpdateItem }) => {
-  const [editingItemId, setEditingItemId] = useState(null);
-  const [newTitle, setNewTitle] = useState('');
-
-  const handleTitleClick = (item) => {
-    setEditingItemId(item.imdbID);
-    setNewTitle(item.Title);
-  };
-
-  const handleTitleChange = (e) => {
-    setNewTitle(e.target.value);
-  };
-
-  const handleTitleBlur = (item) => {
-    if (newTitle !== item.Title) {
-      onUpdateItem({ ...item, Title: newTitle });
-    }
-    setEditingItemId(null);
-  };
-
   return (
-<div className={viewType === 'grid' ? 'grid-view' : 'list-view'}>
-  {items.map((item) => (
-     <Card key={item.imdbID} className="card" style={{ width: '100%' }}>
-          {item.Poster !== 'N/A' && item.Poster && (
-            <Link to={`/item/${item.imdbID}`}>
-              <Card.Img variant="top" src={item.Poster} className="card-img-top" />
-            </Link>
-          )}
-          <Card.Body className="card-body">
-            <Card.Title onClick={() => handleTitleClick(item)}>
-              {editingItemId === item.imdbID ? (
-                <Form.Control
-                  type="text"
-                  value={newTitle}
-                  onChange={handleTitleChange}
-                  onBlur={() => handleTitleBlur(item)}
-                  autoFocus
-                />
-              ) : (
-                <span>{item.Title}</span>
-              )}
-            </Card.Title>
-            <Card.Text>
-              Year: {formatYear(item.Year)}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-  ))}
-</div>
-
+    <div className={viewType === 'grid' ? 'grid-view' : 'list-view'}>
+      {items.map((item) => (
+        <ItemCard key={item.imdbID} item={item} onUpdateItem={onUpdateItem} />
+      ))}
+    </div>
   );
 };
 
