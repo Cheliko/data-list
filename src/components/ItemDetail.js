@@ -1,15 +1,14 @@
 import React from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { useData } from './../DataContext';  
 
 const ItemDetail = () => {
-  const { id } = useParams();
-  const [searchParams] = useSearchParams();
-  const itemId = id || searchParams.get('id');
-  const navigate = useNavigate();
   const { data } = useData();
-  const item = data.find(item => item.imdbID === itemId);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  const item = data.find(item => item.imdbID === id);
 
   if (!item) return <div className="item-not-found">Item not found</div>;
 

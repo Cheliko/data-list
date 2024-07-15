@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { fetchData, updateItem } from "./services/api";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { DataProvider, useData } from "./DataContext";
+import { useData } from "./DataContext";
 import ItemList from "./components/ItemList";
 import TypeTabs from "./components/TypeTabs";
 import "./App.css";
